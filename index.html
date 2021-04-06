@@ -9,24 +9,156 @@
       <script src = "./Animator.js"></script>
     </div>
     <img src = "./Assets/background photo.jpg" id = "background" />
+    <div id = "box">
+
+    </div>
   </body>
 
   <script type = "module">
-  import {ImageCanvas} from './Images.js';
-    import {Vector} from './SvgPlus.js';
+  import {ImageSite} from './Images.js';
 
-    let home = new ImageCanvas('bush website background.jpg', './Assets');
+    let site = new ImageSite({
+      home: {
+        path: './Assets/Home',
+        background: 'bush website background.jpg',
+        icons: [
+          {
+            name: 'address-link.gif',
+            location: '33.6, 76',
+            size: 10,
+            link: 'https://goo.gl/maps/6rQkAY5SuaEhn9q67'
+          },
+          {
+            name: 'about-us.gif',
+            location: '20.57,35.41',
+            size: 10,
+            link: '#/about us'
+          },
+          {
+            name: 'contact-us.gif',
+            location: '7.7,73.86',
+            size: 15,
+            link: "#/contact us"
+          },
+          {
+            name: 'art-wall.gif',
+            location: '66.9,11.6',
+            size: 10,
+            link: "#/art wall"
+          },
+          {
+            name: 'menu.gif',
+            location: '54.39,25.27',
+            size: 14,
+            link: '#/menu'
+          },
+          {
+            name: 'blm.gif',
+            location: '63.3,47.75',
+            size: 10,
+            link: '#/blm'
+          },
+          {
+            name: 'sunday-sessions.gif',
+            location: '91.45,14.44',
+            size: 13,
+            link: '#/sunday sessions'
+          },
+        ]
+      },
+      'contact us': {
+        path: './Assets/Contact Us',
+        background: 'contact us page.jpg',
+        icons: [
+          {
+            name: 'contact us email link.png',
+            location: '50.36,53.89',
+            size: 30,
+            link: 'mailto:hello@bush-group.com'
+          },
+          {
+            name: 'contact us phone link.png',
+            location: '50.27,38.07',
+            size: 30,
+            link: 'tel:0467599986'
+          },
+          {
+            name: 'instagram.png',
+            location: '51.24,70.94',
+            size: 30,
+            link: 'https://www.instagram.com/bush.sydney/'
+          },
+          {
+            name: '../bush logo.png',
+            location: '8.55,13.43',
+            size: 20,
+            link: '#/home'
+          },
+        ]
+      },
+      'about us': {
+        path: './Assets/About Us',
+        background: 'about us page.jpg',
+        icons: [
+          {
+            name: '../bush logo.png',
+            location: '6.53,6.48',
+            size: 20,
+            link: '#/home'
+          },
+        ]
+      },
+      'art wall': {
+        path: './Assets/Art Wall',
+        background: 'art wall page.jpg',
+        icons: [
+          {
+            name: '../bush logo.png',
+            location: '8,10',
+            size: 20,
+            link: '#/home'
+          },
+        ]
+      },
+      'sunday sessions': {
+        path: './Assets/Sunday Sessions',
+        background: 'sunday sesh page.jpg',
+        icons: [
+          {
+            name: '../bush logo.png',
+            location: '8,10',
+            size: 20,
+            link: '#/home'
+          },
+        ]
+      },
+      'menu': {
+        path: './Assets/Menu',
+        background: 'menu page.jpg',
+        icons: [
+          {
+            name: '../bush logo.png',
+            location: '7,7.6',
+            size: 20,
+            link: '#/home'
+          },
+        ]
+      },
+      'blm': {
+        path: './Assets/Blm',
+        background: 'black lives matter page.jpg',
+        icons: [
+          {
+            name: '../bush logo.png',
+            location: '6.9,9.15',
+            size: 20,
+            link: '#/home'
+          },
+        ]
+      },
+    }, anim)
 
-    home.addImage('address-link.gif', new Vector(33.6, 76), 10);
-    home.addImage('about-us.gif', new Vector(20.57,35.41), 10);
-    home.addImage('contact-us.gif', new Vector(7.7,73.86), 15);
-    home.addImage('art-wall.gif', new Vector(66.9,11.6), 14);
-    home.addImage('blm.gif', new Vector(63.3,47.75), 10);
-    home.addImage('menu.gif', new Vector(54.39,25.27), 14);
-    home.addImage('sunday-sessions.gif', new Vector(54.39,25.27), 14);
-    // home.addImage('')
-
-    document.body.appendChild(home);
+    document.getElementById('box').appendChild(site);
   </script>
 
   <style>
@@ -34,8 +166,8 @@
     body{
       padding: 0;
       margin: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       background: transparent;
       overflow: hidden;
     }
@@ -55,11 +187,6 @@
         opacity: 1;
     }
 
-    .canvas {
-      width: 100%;
-      height: 100%;
-      overflow-y: scroll;
-    }
 
     #background{
       position: fixed;
@@ -67,11 +194,30 @@
       left: 0;
       right: 0;
       width: 100%;
+      /* min-height: 100%; */
       z-index: -1;
     }
 
+    #box{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
     .background{
-      width: 100vw;
+      width: 100%;
+    }
+
+    .canvas {
+      width: 100%;
+      height: 100%;
+      overflow-y: scroll;
+    }
+
+    .image-icon{
+      cursor: pointer;
     }
   </style>
 </html>
