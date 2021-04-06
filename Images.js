@@ -1,13 +1,6 @@
 import {SvgPlus, Vector} from './SvgPlus.js'
 
 let draggable = false;
-// let text = new SvgPlus('div')
-// text.props =  {
-//   position: 'fixed',
-//   top: '0%',
-//   left: '0%'
-// }
-// document.body.appendChild(text);
 
 class ImageSite extends SvgPlus{
   constructor(data, splashscreen){
@@ -95,7 +88,7 @@ class ImageSite extends SvgPlus{
   }
 
   async loadComplete(){
-    // await splashscreen.completion();
+    await splashscreen.completion();
     splashscreen.fade(500)
   }
 
