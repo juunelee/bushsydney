@@ -85,7 +85,7 @@ class ImageSite extends SvgPlus{
     let recur = (elem) => {
       for (var child of elem.children) {
         if (SvgPlus.is(child, ImageIcon)) {
-          child.size *= size;
+          child.sizeScale = size;
         }else{
           recur(child);
         }
@@ -196,6 +196,8 @@ class ImageIcon extends SvgPlus{
   constructor(path, location, size, link){
     super('img');
     this.class = "image-icon"
+    this._sizeScale = 1;
+    this._preSizeScale = 1;
     this.link = link;
     this.props = {
       src: path,
@@ -209,12 +211,76 @@ class ImageIcon extends SvgPlus{
   onmousedown(){
     this._s = true;
   }
-  onmouseleave(){
-    this._s = false;
+
+  async grow(value){
+    await this.waveTransistion((p) => {
+      this._preSizeScale = p*0.2 + 1
+      this.size = this.size;
+    }, 500, value);
   }
+
+  async hover(){
+    if (this.moving === true) return;
+    this.moving = true;
+
+    await this.grow(true);
+    let res = null;
+    if (this.mouseover === true){
+      res = await this.waitForEvent('mouseleave');
+    }
+
+    if (res !== 'removed'){
+      await this.grow(false);
+    }else{
+      this._preSizeScale = 1;
+      this.size = this.size;
+      this.mouseover = false;
+    }
+
+    this.moving = false;
+    if (this.mouseover === true){
+      this.hover();
+    }
+  }
+
+  onmouseover(){
+    this.mouseover = true;
+    this.hover();
+  }
+
+  onmouseleave(){
+    this.mouseover = false;
+  }
+
+  async waitForEvent(eventName){
+    return new Promise((resolve, reject) => {
+      let done = false;
+      let checkRemoved = () => {
+        if (!done && document.body.contains(this)){
+          setTimeout(() => {
+            checkRemoved();
+          }, 50)
+        }else {
+          done = true;
+          resolve('removed');
+        }
+      }
+
+      this.addEventListener(eventName, (e) => {
+        done = true;
+        resolve(e)
+      });
+
+
+      checkRemoved();
+
+    });
+  }
+
   onmouseup(){
     this._s = false;
   }
+
   onmousemove(e){
     if (this._s && draggable) {
       let move = new Vector(e.movementX/this.parentNode.clientWidth, e.movementY/this.parentNode.clientHeight);
@@ -222,6 +288,20 @@ class ImageIcon extends SvgPlus{
       this.pos = this.pos.add(move)
       console.log(`${this.pos.round(2)}`);
     }
+  }
+
+  set sizeScale(scale){
+    if (typeof scale !== 'number' || Number.isNaN(scale)) return;
+    this._sizeScale = scale;
+    this.size = this.size;
+  }
+
+  get sizeScale(){
+    return this._sizeScale;
+  }
+
+  get preSizeScale(){
+    return this._preSizeScale;
   }
 
   get isMobile(){
@@ -239,6 +319,7 @@ class ImageIcon extends SvgPlus{
           return navigator.userAgent.match(toMatchItem);
       });
   }
+
   get isLandScape(){
     return window.innerWidth > window.innerHeight;
   }
@@ -262,7 +343,7 @@ class ImageIcon extends SvgPlus{
   set size(size){
     this._size = size;
     this.styles = {
-      width: size + '%',
+      width: size*this._sizeScale*this._preSizeScale + '%',
     }
   }
 
