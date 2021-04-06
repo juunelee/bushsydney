@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Bush Sydney</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div id = "splashscreen">
+      <script src = "./Animator.js"></script>
+    </div>
+    <img src = "./Assets/background photo.jpg" id = "background" />
+  </body>
+
+  <script type = "module">
+  import {ImageCanvas} from './Images.js';
+    import {Vector} from './SvgPlus.js';
+
+    let home = new ImageCanvas('bush website background.jpg', './Assets');
+
+    home.addImage('address-link.gif', new Vector(33.6, 76), 10);
+    home.addImage('about-us.gif', new Vector(20.57,35.41), 10);
+    home.addImage('contact-us.gif', new Vector(7.7,73.86), 15);
+    home.addImage('art-wall.gif', new Vector(66.9,11.6), 14);
+    home.addImage('blm.gif', new Vector(63.3,47.75), 10);
+    home.addImage('menu.gif', new Vector(54.39,25.27), 14);
+    home.addImage('sunday-sessions.gif', new Vector(54.39,25.27), 14);
+    // home.addImage('')
+
+    document.body.appendChild(home);
+  </script>
+
+  <style>
+
+    body{
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    #splashscreen{
+        background-color:#eaffc1;
+        width:100%;
+        height:100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        display:block;
+        overflow: hidden;
+        transform: translate3d(0,0,0);
+        text-align: center;
+        opacity: 1;
+    }
+
+    .canvas {
+      width: 100%;
+      height: 100%;
+      overflow-y: scroll;
+    }
+
+    #background{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: -1;
+    }
+
+    .background{
+      width: 100vw;
+    }
+  </style>
+</html>
