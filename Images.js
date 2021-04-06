@@ -21,6 +21,8 @@ class ImageSite extends SvgPlus{
     this.navigate();
 
     if (this.isMobile) {
+      this.scaleIconSize(1.2)
+
       window.onresize = () => {
         this.resize();
       }
@@ -49,22 +51,47 @@ class ImageSite extends SvgPlus{
   }
 
   resize(){
+    let background = this.getPage('home').background
     if (this.isLandScape){
+      this.getPage('home').setAttribute('style', '');
+      background.setAttribute('style', '');
       this.setAttribute('style', '');
+      this.currentPage.background.setAttribute('style', '');
     }else{
 
       this.styles = {
         'transform-origin': '0% 0%',
-        transform: 'rotate(90deg) translate(0%, -100%)',
-        position: 'fixed',
-        top: '0',
-        left: 0,
-        'overflow-y': 'hidden',
-        height: '100vw',
-        width: window.innerHeight+'px'
+        height: window.innerWidth+ 'px',
+        width: window.innerHeight+ 'px',
+        transform: 'rotate(90deg) translate(0%, -100vw)',
       }
-      // this.scrollTo(0, 0);
+
+      this.currentPage.background.styles = {
+        width: window.innerHeight+ 'px',
+      }
+
+      this.getPage('home').styles = {
+        height: '100vw',
+        width: `177vw`,
+      }
+      background.styles = {
+        height: '100vw',
+        width: 'auto'
+      }
     }
+  }
+
+  scaleIconSize(size){
+    let recur = (elem) => {
+      for (var child of elem.children) {
+        if (SvgPlus.is(child, ImageIcon)) {
+          child.size *= size;
+        }else{
+          recur(child);
+        }
+      }
+    }
+    recur(this.getPage('home'));
   }
 
   navigate(){
@@ -72,15 +99,21 @@ class ImageSite extends SvgPlus{
     if (location.length == 0) {
       this.showPage('home');
     }
-    this.showPage(location)
+    this.showPage(location);
+    if (this.isMobile) {
+      this.resize();
+    }
   }
 
   showPage(key){
-    if (!(key in this._pages)) return;
 
+    if (!(key in this._pages)) return;
+    // this.currentPage.background.setAttribute('style', '');
+
+    this.currentPage = this.getPage(key);
     this.innerHTML = "";
 
-    this.appendChild(this.getPage(key))
+    this.appendChild(this.currentPage);
   }
 
   getPage(key){
@@ -118,10 +151,8 @@ class ImageCanvas extends SvgPlus{
   constructor(data){
     super('div');
     this._loading = 0;
-    this.styles = {
-      position: "relative"
-    }
-    this._background =this.createChild('img');
+    this.class = "canvas-relative"
+    this._background = this.createChild('img');
     this._path = data.path;
 
     this.background.props = {
@@ -193,6 +224,26 @@ class ImageIcon extends SvgPlus{
     }
   }
 
+  get isMobile(){
+      const toMatch = [
+          /Android/i,
+          /webOS/i,
+          /iPhone/i,
+          /iPad/i,
+          /iPod/i,
+          /BlackBerry/i,
+          /Windows Phone/i
+      ];
+
+      return toMatch.some((toMatchItem) => {
+          return navigator.userAgent.match(toMatchItem);
+      });
+  }
+  get isLandScape(){
+    return window.innerWidth > window.innerHeight;
+  }
+
+
   set link(link){
     this._link = link;
   }
@@ -215,6 +266,10 @@ class ImageIcon extends SvgPlus{
     }
   }
 
+  get size(){
+    return this._size;
+  }
+
   get pos(){
     return this._pos;
   }
@@ -224,13 +279,16 @@ class ImageIcon extends SvgPlus{
       let split = location.replace(' ', '').split(',')
       location = new Vector(split[0], split[1]);
     }
-    this._pos = location
+    this._pos = location;
+
+
     this.styles = {
       position: 'absolute',
       top: location.y + '%',
       left: location.x + '%',
       transform: 'translate(-50%, -50%)'
     }
+
   }
 }
 export {ImageSite}
