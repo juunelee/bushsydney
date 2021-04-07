@@ -1,6 +1,6 @@
 import {SvgPlus, Vector} from './SvgPlus.js'
 
-let draggable = false;
+let draggable = true;
 
 class ImageSite extends SvgPlus{
   constructor(data, splashscreen){
