@@ -134,6 +134,9 @@ class ImageSite extends SvgPlus{
     page.onallload = () => {
       this._loading--;
       if (this._loading == 0) {
+        // this.loadComplete();
+      }
+      if (key === 'home'){
         this.loadComplete();
       }
     }
