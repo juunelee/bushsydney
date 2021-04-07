@@ -84,7 +84,7 @@ class ImageSite extends SvgPlus{
   scaleIconSize(size){
     let recur = (elem) => {
       for (var child of elem.children) {
-        if (SvgPlus.is(child, ImageIcon)) {
+        if (SvgPlus.is(child, ImageIcon) && child.iconData && child.iconData.scale !== 'noscale') {
           child.sizeScale = size;
         }else{
           recur(child);
@@ -185,7 +185,7 @@ class ImageCanvas extends SvgPlus{
 
   addImage(icon){
     this._loading++;
-    let image = new ImageIcon(this.getPath(icon.name), icon.location, icon.size, icon.link);
+    let image = new ImageIcon(this.getPath(icon.name), icon.location, icon.size, icon.link, icon);
     image.onload = () => {
       this._loading--;
       if (this._loading == 0 && this.onallload instanceof Function) {
@@ -196,9 +196,10 @@ class ImageCanvas extends SvgPlus{
   }
 }
 class ImageIcon extends SvgPlus{
-  constructor(path, location, size, link){
+  constructor(path, location, size, link, icon){
     super('img');
     this.class = "image-icon"
+    this.iconData = icon;
     this._sizeScale = 1;
     this._preSizeScale = 1;
     this.link = link;
