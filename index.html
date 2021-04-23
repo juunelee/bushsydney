@@ -8,6 +8,7 @@
     <link rel="shortcut icon" type="image/jpg" href="./favicon.jpg"/>
   </head>
   <body>
+    <img id = "landscape-prompt" src = "./Assets/turn device landscape.svg" />
     <div style = "display: none">
       art wall
       in the back section of our restaurant we have a wall dedicated to art created by the community anyone can draw paint or stick anything up there our website design is actually made from digitized versions of everyone’s artworks, compiled, coloured and illustrated with a cross section of our restaurant by local artist and designer Juune lee additionally we will be updating the website with new drawings every so often
@@ -32,7 +33,7 @@
     <div id = "splashscreen">
       <script src = "./Animator.js"></script>
     </div>
-    <img src = "./Assets/background photo.jpg" id = "background" />
+    <!-- <img src = "./Assets/background photo.jpg" id = "background" /> -->
     <div id = "box">
 
     </div>
@@ -234,7 +235,7 @@
       margin: 0;
       width: 100vw;
       height: 100vh;
-      background: transparent;
+      background: #38471f;
       overflow: hidden;
     }
 
@@ -286,6 +287,14 @@
 
     .image-icon{
       cursor: pointer;
+    }
+    #landscape-prompt{
+      position: fixed;
+      z-index: 100;
+      width: 60vw;
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, 0);
     }
   </style>
 </html>

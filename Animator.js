@@ -31,6 +31,15 @@ anim = lottie.loadAnimation(params);
 loader.animationDone = false;
 anim.addEventListener('complete', ()=> {
   loader.animationDone = true;
+  loader.innerHTML = ""
+  var params = {
+      container: loader,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      animationData: animationData
+  };
+  anim = lottie.loadAnimation(params);
 })
 
 loader.animation = anim;
