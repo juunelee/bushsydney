@@ -10,6 +10,7 @@ class ImageSite extends SvgPlus{
     this.class = "canvas";
     this.landscapePrompt = new SvgPlus('landscape-prompt')
     this._loading = 0;
+    this.loaded = false;
     this.splashscreen = splashscreen;
 
     this.createSites(data);
@@ -30,7 +31,6 @@ class ImageSite extends SvgPlus{
       }
       this.resize();
     }else{
-      console.log(this.landscapePrompt);
       this.landscapePrompt.styles = {display: 'none'}
     }
   }
@@ -65,7 +65,7 @@ class ImageSite extends SvgPlus{
       this.currentPage.background.setAttribute('style', '');
     }else{
       if (this.isMobile){
-        this.landscapePrompt.styles = {display: 'block'}
+        this.landscapePrompt.styles = {display: this.loaded ? 'none' : 'block'}
       }
 
       this.styles = {
@@ -131,7 +131,8 @@ class ImageSite extends SvgPlus{
 
   async loadComplete(){
     await splashscreen.completion();
-
+    this.loaded = true;
+    this.landscapePrompt.styles = {display: 'none'}
     splashscreen.fade(500)
   }
 
