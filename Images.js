@@ -173,6 +173,14 @@ class ImageCanvas extends SvgPlus{
       src: this.getPath(data.background),
       class: 'background'
     }
+
+    if (data.menu) {
+      this._menu = this.createChild("img");
+      this._menu.props = {
+        src: this.getPath(data.menu),
+        class: 'menu'
+      }
+    }
     this.addIcons(data.icons)
   }
 

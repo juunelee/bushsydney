@@ -185,6 +185,7 @@
       'menu': {
         path: './Assets/Menu',
         background: 'menu page.jpg',
+        menu: "menu page2.jpg", // you can change this to change menu file
         icons: [
           {
             name: '../bush logo.png',
@@ -276,6 +277,21 @@
     .background{
       width: 100%;
     }
+
+    /* Menu styles, change width */
+    .menu {
+      /* center image relative to viewport */
+      position: absolute;
+      top: 50vh;
+      left: 50vw;
+      transform: translate(-50%, -50%);
+
+      /* edit the width */
+      width: 70%;
+    }
+
+
+
     .canvas-relative{
       position: relative;
     }
